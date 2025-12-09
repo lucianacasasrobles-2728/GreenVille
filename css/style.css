@@ -327,3 +327,37 @@ progress {
     line-height: 1.6;
     color: #444;
 }
+/* Hide menu icon on desktop */
+.menu-toggle {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Mobile styles */
+@media (max-width: 800px) {
+
+    /* Show the menu icon */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Hide sidebar until menu is opened */
+    .sidebar {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: #f2f2f2;
+        width: 220px;
+        height: calc(100vh - 60px);
+        z-index: 1000;
+        padding: 20px;
+        box-shadow: 2px 0 6px rgba(0,0,0,0.15);
+    }
+
+    /* Stack content below the navbar */
+    .dashboard-container {
+        flex-direction: column;
+    }
+}
