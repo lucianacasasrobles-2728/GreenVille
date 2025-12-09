@@ -4,21 +4,20 @@
 function loadData() {
 
     // Temporary loading messages
-    document.getElementById("greenActions").innerHTML = "<p>Loading actions...</p>";
-    document.getElementById("communalGoals").innerHTML = "<p>Loading goals...</p>";
-    document.getElementById("trades").innerHTML = "<p>Loading trades...</p>";
+    if (document.getElementById("greenActions"))
+        document.getElementById("greenActions").innerHTML = "<p>Loading actions...</p>";
+
+    if (document.getElementById("communalGoals"))
+        document.getElementById("communalGoals").innerHTML = "<p>Loading goals...</p>";
+
+    if (document.getElementById("trades"))
+        document.getElementById("trades").innerHTML = "<p>Loading trades...</p>";
 
     // Fetch JSON file
     fetch('data/website_data.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            displayData(data);
-        })
-        .catch(function (error) {
-            console.log("Error loading JSON:", error);
-        });
+        .then(response => response.json())
+        .then(data => displayData(data))
+        .catch(error => console.log("Error loading JSON:", error));
 }
 
 /* -------------------------------------------------------
@@ -26,111 +25,92 @@ function loadData() {
 -------------------------------------------------------- */
 function displayData(data) {
 
-    /* Update communal points (only if element exists) */
+    /* Update communal points */
     var poolSpan = document.getElementById('communalPool');
-    if (poolSpan) {
-        poolSpan.textContent = data.communalPointsPool;
-    }
+    if (poolSpan) poolSpan.textContent = data.communalPointsPool;
 
-    /* -------------------------------
-       GREEN ACTIONS
-    --------------------------------*/
+    /* ---- GREEN ACTIONS ---- */
     var actionsDiv = document.getElementById('greenActions');
-    actionsDiv.innerHTML = "";
+    if (actionsDiv) {
+        actionsDiv.innerHTML = "";
+        data.greenActions.forEach(action => {
+            var div = document.createElement('div');
+            div.classList.add('card');
 
-    for (var i = 0; i < data.greenActions.length; i++) {
-        var action = data.greenActions[i];
+            div.innerHTML = `
+                ${action.picture ? `<img src="${action.picture}" alt="${action.title}">` : ""}
+                <h3>${action.title}</h3>
+                <p>${action.description}</p>
 
-        var div = document.createElement('div');
-        div.classList.add('card');
-
-        div.innerHTML = `
-            ${action.picture ? `<img src="${action.picture}" alt="${action.title}">` : ""}
-            <h3>${action.title}</h3>
-            <p>${action.description}</p>
-
-            <div class="button-group">
-                <button class="action-btn">Allocate</button>
-                <button class="action-btn">Trade</button>
-                <button class="action-btn">Donate</button>
-            </div>
-        `;
-
-        actionsDiv.appendChild(div);
+                <div class="button-group">
+                    <button class="action-btn">Allocate</button>
+                    <button class="action-btn">Trade</button>
+                    <button class="action-btn">Donate</button>
+                </div>
+            `;
+            actionsDiv.appendChild(div);
+        });
     }
 
-
-    /* -------------------------------
-       COMMUNAL GOALS
-    --------------------------------*/
+    /* ---- COMMUNAL GOALS ---- */
     var goalsDiv = document.getElementById('communalGoals');
-    goalsDiv.innerHTML = "";
+    if (goalsDiv) {
+        goalsDiv.innerHTML = "";
+        data.communalGoals.forEach(goal => {
+            var divGoal = document.createElement('div');
+            divGoal.classList.add('card');
 
-    for (var j = 0; j < data.communalGoals.length; j++) {
-        var goal = data.communalGoals[j];
+            var progressPercent = goal.pointsNeeded
+                ? Math.round((goal.currentPoints / goal.pointsNeeded) * 100)
+                : 0;
 
-        var divGoal = document.createElement('div');
-        divGoal.classList.add('card');
+            divGoal.innerHTML = `
+                <h3>${goal.title}</h3>
+                <p>${goal.description}</p>
+                <p><strong>Progress:</strong> ${goal.currentPoints} / ${goal.pointsNeeded} (${progressPercent}%)</p>
+                <progress value="${goal.currentPoints}" max="${goal.pointsNeeded}"></progress>
+            `;
 
-        var progressPercent = goal.pointsNeeded
-            ? Math.round((goal.currentPoints / goal.pointsNeeded) * 100)
-            : 0;
-
-        var html = `
-            <h3>${goal.title}</h3>
-            <p>${goal.description}</p>
-            <p><strong>Progress:</strong> ${goal.currentPoints} / ${goal.pointsNeeded} (${progressPercent}%)</p>
-            <progress value="${goal.currentPoints}" max="${goal.pointsNeeded}"></progress>
-        `;
-
-        divGoal.innerHTML = html;
-        goalsDiv.appendChild(divGoal);
+            goalsDiv.appendChild(divGoal);
+        });
     }
 
-
-    /* -------------------------------
-       TRADES
-    --------------------------------*/
+    /* ---- TRADES ---- */
     var tradesDiv = document.getElementById('trades');
-    tradesDiv.innerHTML = "";
+    if (tradesDiv) {
+        tradesDiv.innerHTML = "";
+        data.trades.forEach(trade => {
+            var divTrade = document.createElement('div');
+            divTrade.classList.add('card');
 
-    for (var t = 0; t < data.trades.length; t++) {
-        var trade = data.trades[t];
+            divTrade.innerHTML = `
+                ${trade.picture ? `<img src="${trade.picture}" alt="${trade.title}">` : ""}
+                <h3>${trade.title}</h3>
+                <p>${trade.description}</p>
+                <p><strong>Cost:</strong> ${trade.pointsCost} points</p>
+            `;
 
-        var divTrade = document.createElement('div');
-        divTrade.classList.add('card');
-
-        divTrade.innerHTML = `
-            ${trade.picture ? `<img src="${trade.picture}" alt="${trade.title}">` : ""}
-            <h3>${trade.title}</h3>
-            <p>${trade.description}</p>
-            <p><strong>Cost:</strong> ${trade.pointsCost} points</p>
-        `;
-
-        tradesDiv.appendChild(divTrade);
+            tradesDiv.appendChild(divTrade);
+        });
     }
 
-
-    /* -------------------------------
-       COMMUNAL TASKS
-    --------------------------------*/
+    /* ---- TASKS ---- */
     var tasksDiv = document.getElementById('communalTasks');
-    tasksDiv.innerHTML = "";
+    if (tasksDiv) {
+        tasksDiv.innerHTML = "";
+        data.communalTasks.forEach(task => {
+            var divTask = document.createElement('div');
+            divTask.classList.add('card');
 
-    for (var x = 0; x < data.communalTasks.length; x++) {
-        var task = data.communalTasks[x];
+            divTask.innerHTML = `
+                <h3>${task.title}</h3>
+                <p>${task.description}</p>
+                <p><strong>Deadline:</strong> ${task.deadline}</p>
+                <p><strong>Points:</strong> ${task.points}</p>
+            `;
 
-        var divTask = document.createElement('div');
-        divTask.classList.add('card');
-
-        divTask.innerHTML = `
-            <h3>${task.title}</h3>
-            <p>${task.description}</p>
-            <p><strong>Deadline:</strong> ${task.deadline}</p>
-            <p><strong>Points:</strong> ${task.points}</p>
-        `;
-
-        tasksDiv.appendChild(divTask);
+            tasksDiv.appendChild(divTask);
+        });
     }
 }
 
@@ -138,41 +118,47 @@ function displayData(data) {
    TAB SWITCHING
 -------------------------------------------------------- */
 function showTab(tabId, button) {
-    // Hide all tab contents
     document.querySelectorAll(".tab-content").forEach(tab => {
         tab.style.display = "none";
     });
 
-    // Show selected tab
     var activeTab = document.getElementById(tabId);
-    if (activeTab) {
-        activeTab.style.display = "block";
-    }
+    if (activeTab) activeTab.style.display = "block";
 
-    // Update button styles
     document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.classList.remove("active");
     });
 
-    if (button) {
-        button.classList.add("active");
-    }
+    if (button) button.classList.add("active");
+
+    // Close sidebar automatically after selecting a tab (mobile)
+    document.querySelector(".sidebar").style.display = "none";
 }
+
+/* -------------------------------------------------------
+   HAMBURGER MENU TOGGLE (UNIVERSAL)
+-------------------------------------------------------- */
+const menuToggle = document.querySelector(".menu-toggle");
+const sidebar = document.querySelector(".sidebar");
+
+if (menuToggle) {
+    menuToggle.addEventListener("click", () => {
+        sidebar.style.display = (sidebar.style.display === "block") ? "none" : "block";
+    });
+}
+
+/* Close sidebar if user clicks OUTSIDE */
+document.addEventListener("click", function(e) {
+    if (
+        !e.target.closest(".sidebar") &&
+        !e.target.closest(".menu-toggle")
+    ) {
+        sidebar.style.display = "none";
+    }
+});
 
 /* -------------------------------------------------------
    START PROGRAM WHEN PAGE OPENS
 -------------------------------------------------------- */
 loadData();
 showTab('overview');
-/* -------------------------------------------------------
-   HAMBURGER MENU TOGGLE
--------------------------------------------------------- */
-document.querySelector(".menu-toggle").addEventListener("click", () => {
-    const sidebar = document.querySelector(".sidebar");
-    
-    if (sidebar.style.display === "block") {
-        sidebar.style.display = "none";
-    } else {
-        sidebar.style.display = "block";
-    }
-});
