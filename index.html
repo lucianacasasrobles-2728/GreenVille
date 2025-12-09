@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLOVERVILLE – Home</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -20,30 +22,21 @@
         </nav>
     </header>
 
-    <!-- MAIN LAYOUT (NECESSARY FOR THE MENU TO WORK) -->
-    <div class="dashboard-container">
-
-        <!-- SIDEBAR (NECESSARY FOR THE MENU TO OPEN) -->
-        <div class="sidebar">
-            <button class="tab-btn active" onclick="window.location='index.html'">Home</button>
-            <button class="tab-btn" onclick="window.location='dashboard.html'">Dashboard</button>
-        </div>
-
-        <!-- CONTENT AREA -->
-        <div class="content-area">
-            
-            <!-- HERO SECTION -->
-            <section class="hero">
-                <h1 class="hero-title">Welcome to Cloverville</h1>
-                <p class="hero-subtitle">
-                    A sustainable community built through shared goals, green actions, and collaboration.
-                </p>
-
-                <a class="main-btn" href="dashboard.html">Enter Dashboard</a>
-            </section>
-
-        </div>
+    <!-- SIDEBAR (only for mobile navigation) -->
+    <div class="sidebar">
+        <button class="tab-btn" onclick="window.location='index.html'">Home</button>
+        <button class="tab-btn" onclick="window.location='dashboard.html'">Dashboard</button>
     </div>
+
+    <!-- MAIN CONTENT -->
+    <section class="hero">
+        <h1 class="hero-title">Welcome to Cloverville</h1>
+        <p class="hero-subtitle">
+            A sustainable community built through shared goals, green actions, and collaboration.
+        </p>
+
+        <a class="main-btn" href="dashboard.html">Enter Dashboard</a>
+    </section>
 
     <!-- FOOTER -->
     <footer class="footer">
