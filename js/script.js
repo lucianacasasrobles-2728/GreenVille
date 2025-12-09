@@ -164,3 +164,15 @@ function showTab(tabId, button) {
 -------------------------------------------------------- */
 loadData();
 showTab('overview');
+/* -------------------------------------------------------
+   HAMBURGER MENU TOGGLE
+-------------------------------------------------------- */
+document.querySelector(".menu-toggle").addEventListener("click", () => {
+    const sidebar = document.querySelector(".sidebar");
+    
+    if (sidebar.style.display === "block") {
+        sidebar.style.display = "none";
+    } else {
+        sidebar.style.display = "block";
+    }
+});
