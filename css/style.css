@@ -47,7 +47,7 @@ body {
     text-decoration: underline;
 }
 
-/* ALWAYS SHOW MENU ICON (FOR ALL DEVICES) */
+/* ALWAYS SHOW MENU ICON */
 .menu-toggle {
     display: block !important;
     font-size: 28px;
@@ -84,7 +84,6 @@ body {
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s ease;
     text-decoration: none;
 }
 
@@ -93,7 +92,7 @@ body {
 }
 
 /* -------------------------------------------------------
-   GENERAL CARD + SECTIONS
+   SECTIONS
 -------------------------------------------------------- */
 .section {
     background: white;
@@ -107,7 +106,9 @@ body {
     margin-top: 0;
 }
 
-/* CARD */
+/* -------------------------------------------------------
+   CARD (NO ANIMATIONS – INFORMATIONAL ONLY)
+-------------------------------------------------------- */
 .card {
     background: #ffffff;
     border-radius: 10px;
@@ -115,12 +116,7 @@ body {
     padding: 15px;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    cursor: default;
 }
 
 .card h3 {
@@ -134,34 +130,6 @@ body {
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
-    transition: transform 0.3s ease;
-}
-
-.card:hover img {
-    transform: scale(1.04);
-}
-
-/* BUTTONS INSIDE CARDS */
-.button-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-    justify-content: center;
-}
-
-.action-btn {
-    background-color: #2e7d32;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s ease;
-}
-
-.action-btn:hover {
-    background-color: #1b5e20;
 }
 
 /* -------------------------------------------------------
@@ -202,27 +170,15 @@ body {
 }
 
 /* -------------------------------------------------------
-   FOOTER
--------------------------------------------------------- */
-.footer {
-    text-align: center;
-    margin-top: 40px;
-    padding: 15px;
-    color: #666;
-    font-size: 14px;
-    background-color: #f4f7f4;
-}
-
-/* -------------------------------------------------------
-   DASHBOARD LAYOUT + SIDEBAR (UNIVERSAL BEHAVIOR)
+   DASHBOARD LAYOUT + SIDEBAR
 -------------------------------------------------------- */
 .dashboard-container {
     display: flex;
-    flex-direction: column !important; /* Always stacked */
+    flex-direction: column;
     margin-top: 20px;
 }
 
-/* Sidebar ALWAYS hidden until menu toggle is pressed */
+/* Sidebar hidden by default */
 .sidebar {
     display: none;
     position: fixed;
@@ -246,7 +202,6 @@ body {
     text-align: left;
     cursor: pointer;
     border-radius: 8px;
-    transition: 0.2s;
 }
 
 .tab-btn:hover {
@@ -265,7 +220,7 @@ body {
 }
 
 /* -------------------------------------------------------
-   CONTACT CARDS
+   CONTACT + OVERVIEW CARDS
 -------------------------------------------------------- */
 .contact-card {
     background: white;
@@ -294,3 +249,45 @@ body {
     line-height: 1.6;
     color: #444;
 }
+
+/* -------------------------------------------------------
+   FOOTER
+-------------------------------------------------------- */
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 15px;
+    color: #666;
+    font-size: 14px;
+    background-color: #f4f7f4;
+}
+/* -------------------------------------------------------
+   TEXT CLAMP + VIEW MORE
+-------------------------------------------------------- */
+
+/* Limit text to 2 lines */
+.card p.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Expanded state */
+.card p.description.expanded {
+    display: block;
+}
+
+/* View more link */
+.view-more {
+    color: #2e7d32;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 6px;
+    display: inline-block;
+}
+
+.view-more:hover {
+    text-decoration: underline;
+}
+
