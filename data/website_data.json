@@ -19,9 +19,10 @@
     },
     {
       "title": "Save Water",
-      "description": "Collect rainwater and use it for gardening to conserve drinking water.",
+      "description":"Collect rainwater and use it for gardening to conserve drinking water.",
       "picture": "images/saveWater.png"
     }
+    
   ],
 
   "communalGoals": [
